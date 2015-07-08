@@ -50,6 +50,7 @@ The below shows some common patterns:
 	});
 
 
-| Option             | Type                         | Default               | Description    |
-|--------------------|------------------------------|-----------------------|----------------|
-| `removeFields`     | Array of RegExps / Functions | `[/^_/]`              | A list of regular expressions or closure functions to run on each object field. Returning true will omit that field from the output |
+| Option             | Type                         | Default                       | Description    |
+|--------------------|------------------------------|-------------------------------|----------------|
+| `removeFields`     | Array of RegExps / Functions | `[/^_/]`                      | A list of regular expressions or closure functions to run on each object field. Returning true will omit that field from the output |
+| `renameFields`     | Object (field => renamed)    | `{'_id': '_id', '__v': '_v'}` | An object of fields to rename. This also takes presidence over `removeFields` so any rename here will override the remove |

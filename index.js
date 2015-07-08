@@ -6,6 +6,8 @@ var _ = { // Selected Lodash functions
 };
 
 var options = {
+	// Convert the fields specified by the key into the value (this will also override the removeFields matching)
+	renameFields: {_id: '_id', __v: '_v'},
 	// Array of RegExps or functions to run on each field in a return object to deside if it should be output
 	removeFields: [/^_/],
 };
@@ -25,6 +27,12 @@ var walker = function(obj) {
 		for (var k in obj) {
 			if (!obj.hasOwnProperty(k)) continue;
 			var include = true;
+			if (options.renameFields[k]) {
+				newObj[options.renameFields[k]] = obj[k];
+				console.log('MV', k, options.renameFields[k]);
+				include = false;
+			}
+
 			for (var rf in options.removeFields) {
 				if (_.isRegExp(options.removeFields[rf])) {
 					if (options.removeFields[rf].test(k)) include = false;
