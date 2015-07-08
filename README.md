@@ -22,7 +22,7 @@ Include the module in the usual way and set it as the default `outputFn` when se
 
 Configuration
 -------------
-By default express-restify-mongoose-guard will protect any field beginning with `_` from being outputted.
+By default express-restify-mongoose-guard will protect any field beginning with `_` from being outputted (except for `_id` and `__v` which is renamed to `_v`).
 
 If you wish to tweak this further you can pass options by adding them to the function call.
 
