@@ -25,6 +25,7 @@
   "dependencies": {
     "lodash.isarray": "^3.0.4",
     "lodash.isobject": "^3.0.2",
+    "lodash.isplainobject": "^3.2.0",
     "lodash.isregexp": "^3.0.3"
   }
 }

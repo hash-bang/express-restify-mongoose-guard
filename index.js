@@ -1,5 +1,6 @@
 var _ = { // Selected Lodash functions
 	isArray: require('lodash.isarray'),
+	isPlainObject: require('lodash.isplainobject'),
 	isObject: require('lodash.isobject'),
 	isRegExp: require('lodash.isregexp'),
 };
@@ -19,7 +20,7 @@ var walker = function(obj) {
 		for (var i = 0; i < obj.length; i++) {
 			obj[i] = walker(obj[i]);
 		}
-	} else if (_.isObject(obj)) {
+	} else if (_.isPlainObject(obj)) {
 		var newObj = {};
 		for (var k in obj) {
 			if (!obj.hasOwnProperty(k)) continue;
@@ -36,6 +37,8 @@ var walker = function(obj) {
 			if (include) newObj[k] = walker(obj[k]);
 		}
 		obj = newObj;
+	} else if (_.isObject(obj)) {
+		return obj.toString();
 	}
 	return obj;
 };
