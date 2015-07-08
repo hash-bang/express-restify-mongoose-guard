@@ -29,7 +29,6 @@ var walker = function(obj) {
 			var include = true;
 			if (options.renameFields[k]) {
 				newObj[options.renameFields[k]] = obj[k];
-				console.log('MV', k, options.renameFields[k]);
 				include = false;
 			}
 
