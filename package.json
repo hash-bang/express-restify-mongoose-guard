@@ -1,0 +1,30 @@
+{
+  "name": "express-restify-mongoose-guard",
+  "version": "1.0.0",
+  "description": "Pre-output handler for express-restify-mongoose that removes certain fields from the output object",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hash-bang/express-restify-mongoose-guard.git"
+  },
+  "keywords": [
+    "ReST",
+    "express",
+    "express-restify-mongoose",
+    "mongodb",
+    "mongoose",
+    "restify",
+    "restify"
+  ],
+  "author": "Matt Carter <m@ttcarter.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hash-bang/express-restify-mongoose-guard/issues"
+  },
+  "homepage": "https://github.com/hash-bang/express-restify-mongoose-guard",
+  "dependencies": {
+    "lodash.isarray": "^3.0.4",
+    "lodash.isobject": "^3.0.2",
+    "lodash.isregexp": "^3.0.3"
+  }
+}
