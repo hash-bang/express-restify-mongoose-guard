@@ -29,7 +29,7 @@ var walker = function(obj) {
 				if (_.isRegExp(options.removeFields[rf])) {
 					if (options.removeFields[rf].test(k)) include = false;
 				} else { // Assume its a function
-					if (options.removeFields[rf].test(v, k)) include = false;
+					if (options.removeFields[rf].test(obj[k], k)) include = false;
 				}
 				if (!include) break;
 			}
