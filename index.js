@@ -57,7 +57,14 @@ module.exports = function(userSettings) {
 			options[k] = userSettings[k];
 	// }}}
 
-	return function(res, result) {
-		res.send(walker(result));
+	return function(req, res, result) {
+		if (result && result.result) { // >1 version of E-R-M
+			res
+				.status(result.statusCode)
+				.send(walker(result.result))
+				.end();
+		} else { // <1 version of E-R-M (called as res,result)
+			req.send(walker(res));
+		}
 	};
 };
