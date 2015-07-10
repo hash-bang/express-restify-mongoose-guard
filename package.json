@@ -1,6 +1,6 @@
 {
   "name": "express-restify-mongoose-guard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Pre-output handler for express-restify-mongoose that removes certain fields from the output object",
   "main": "index.js",
   "repository": {
