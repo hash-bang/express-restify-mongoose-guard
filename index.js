@@ -6,10 +6,23 @@ var _ = { // Selected Lodash functions
 };
 
 var options = {
+	// PRE hooks:
+	// Transform all the following methods via a function - each closure is called as (req, res, next)
+	remapMethods: {},
+	// Convert delete operations into an update by setting this to an object of the fields to change
+	deleteUpdateRemap: false,
+
+	// POST hooks:
 	// Convert the fields specified by the key into the value (this will also override the removeFields matching)
 	renameFields: {_id: '_id', __v: '_v'},
 	// Array of RegExps or functions to run on each field in a return object to deside if it should be output
 	removeFields: [/^_/],
+
+	// Misc
+	determineModel: function(req) { // Synchronous function that should determine the mongoose model we are working with from the request object - override this if you are using your own unique routing
+		var extracted = /\/api\/(v1\/)?(.*)\/:id/.exec(req.route.path);
+		if (extracted) return extracted[2];
+	},
 };
 
 /**
@@ -57,14 +70,35 @@ module.exports = function(userSettings) {
 			options[k] = userSettings[k];
 	// }}}
 
-	return function(req, res, result) {
-		if (result && result.result) { // >1 version of E-R-M
-			res
-				.status(result.statusCode)
-				.send(walker(result.result))
-				.end();
-		} else { // <1 version of E-R-M (called as res,result)
-			req.send(walker(res));
-		}
+	// If deleteUpdateRemap is specified inject a function which turns delete operations into updates
+	if (options['deleteUpdateRemap']) {
+		options.remapMethods.delete = function(req, res, next) {
+			if (!req.params.id) return next('Delete must have a single ID');
+			if (typeof(req.params.id) != 'string') return next('Delete ID must be a single ID');
+			var model = options.determineModel(req);
+			if (!model) return next('Unable to deteremine model to work with');
+			mongoose.connection.base.models[model].findByIdAndUpdate(req.params.id, {status: 'deleted'}, function(err, result) {
+				if (err) return next(err);
+				res.send(result);
+			});
+		},
+	}
+
+	return {
+		preHook: function(req, res, next) {
+			var method = req.method.toLowerCase();
+			if (!options.remapMethods[method]) return next();
+			options.remapMethods[method](req, res, next);
+		},
+		postHook: function(req, res, result) {
+			if (result && result.result) { // >1 version of E-R-M
+				res
+					.status(result.statusCode)
+					.send(walker(result.result))
+					.end();
+			} else { // <1 version of E-R-M (called as res,result)
+				req.send(walker(res));
+			}
+		},
 	};
 };
