@@ -81,7 +81,7 @@ module.exports = function(userSettings) {
 				if (err) return next(err);
 				res.send(result);
 			});
-		},
+		};
 	}
 
 	return {
