@@ -97,7 +97,7 @@ module.exports = function(userSettings) {
 					.send(walker(result.result))
 					.end();
 			} else { // <1 version of E-R-M (called as res,result)
-				req.send(walker(res));
+				res.send(walker(res));
 			}
 		},
 	};

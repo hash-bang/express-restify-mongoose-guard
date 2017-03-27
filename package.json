@@ -1,6 +1,6 @@
 {
   "name": "express-restify-mongoose-guard",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Pre / post hooks for express-restify-mongoose that provides configurable protection for Restify interfaces",
   "main": "index.js",
   "repository": {
